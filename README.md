@@ -94,28 +94,28 @@ def move(info, ctx):
 
 ### "The buggy robot"
 
-`` `python
-def move (info, ctx):
-    return 10/0
-`` `
+```python
+def move(info, ctx):
+    return 10/0
+```
 After the start of the game, an error occurs.
-`` `
+```
 ERROR. Process 'robot' on move function. integer division or modulo by zero.
-`` `
+```
 The robot does not move anymore, but for the rest the game continues.
 
 ### "EGGOG"
 
-Invalid Python code: no colon, tab.
+Invalid Python code: no colon, no tab.
 
-`` `python
-def move (info, ctx)
+```python
+def move(info, ctx)
 return 0
-`` `
+```
 The game does not start with an error:
-`` `
+```
 ERROR: Error loading player robot: invalid syntax (robot.py, line 3)
-`` `
+```
 It is necessary either to correct the error, or to delete the file with an error from the directory with the programs of the robots.
 
 ### "Random walks"
