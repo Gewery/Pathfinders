@@ -75,10 +75,10 @@ The second function argument is an empty dictionary `ctx` into which you can wri
 
 ### "Always up"
 
-`` `python
+```python
 def move (info, ctx):
     return 0 # Move upwards always
-`` `
+```
 
 ### "Observer"
 
