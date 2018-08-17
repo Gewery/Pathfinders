@@ -1,4 +1,9 @@
-## How do I run the game?
+# Pathfinders
+
+A game about finding treasures in a maze. Through the labyrinth, golden coins are scattered, which are collected by fully automatic robots. The task of the players is to write a robot control program for collecting coins. It must be remembered that other robots do not stand still and are also looking for treasure. The winner is the one whose robot will collect more coins.
+
+
+#### How do I run the game?
 
 To work, the game requires python3 and [Flask] (http://flask.pocoo.org/) for the web interface.
 
@@ -24,12 +29,6 @@ Process 'masha' started
 
 
 -----------------------------------------------------------------------------------------------
-
-
-# Pathfinders
-
-A game about finding treasures in a maze. Through the labyrinth, golden coins are scattered, which are collected by fully automatic robots. The task of the players is to write a robot control program for collecting coins. It must be remembered that other robots do not stand still and are also looking for treasure. The winner is the one whose robot will collect more coins.
-
 
 ## Programming the robot
 
