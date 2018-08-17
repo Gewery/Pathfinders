@@ -17,12 +17,12 @@ Also your .py file should be in the "players" and in the root of a game (folder 
 1. Declare a repository from Github
 2. Run from the command line
 
-`` `
+```
 $ ./pathfinders.py
 Process 'gosha' started
 Process 'masha' started
 ...
-`` `
+```
 
 3. Open in the browser [http://127.0.0.1:5000/](http://127.0.0.1:5000/) The page should display the status of the game board.
 4. To complete the game, you must end the `pathfinder.py` process in the console with Ctrl-C
@@ -59,14 +59,14 @@ All coordinates are counted from the upper left corner of the field starting fro
 
 It is necessary to note the device of the card separately. A map is a two-dimensional array, that is, a list of lists. For example:
 
-`` `python
+```python
 info ["map"] = [
 [0, 0, 0, 1, 0],
 [0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0],
 [1, 1, 0, 1, 0]
 ]
-`` `
+```
 The map is a list of "strings", so to find out what is at the x, y coordinate, you need to refer to the element info ["map"] [y] [x] `, not to the info [" map "] [x] [y] `.
 
 The second function argument is an empty dictionary `ctx` into which you can write arbitrary fields. The next time the function is called, these data will appear in the dictionary `ctx`. In this way, it can be used to store the results of calculations between subsequent calls to the `move ()` function.
