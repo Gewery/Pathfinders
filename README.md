@@ -1,3 +1,7 @@
+## How do I run the game?
+
+To work, the game requires python3 and [Flask] (http://flask.pocoo.org/) for the web interface.
+
 To run it on your own computer you should install 2 modules:
 - Flask (pip install flask)
 - configparser (pip install configparser)
@@ -5,10 +9,31 @@ To run it on your own computer you should install 2 modules:
 Also your .py file should be in the "players" and in the root of a game (folder "Pathfinders")
 
 
+1. Declare a repository from Github
+2. Run from the command line
 
-Programming the robot
+`` `
+$ ./pathfinders.py
+Process 'gosha' started
+Process 'masha' started
+...
+`` `
 
-To add a robot, just put the program file in the directory `players` (you can change the directory in the config file). Requirements for the program:
+3. Open in the browser [http://127.0.0.1:5000/](http://127.0.0.1:5000/) The page should display the status of the game board.
+4. To complete the game, you must end the `pathfinder.py` process in the console with Ctrl-C
+
+
+-----------------------------------------------------------------------------------------------
+
+
+# Pathfinders
+
+A game about finding treasures in a maze. Through the labyrinth, golden coins are scattered, which are collected by fully automatic robots. The task of the players is to write a robot control program for collecting coins. It must be remembered that other robots do not stand still and are also looking for treasure. The winner is the one whose robot will collect more coins.
+
+
+## Programming the robot
+
+To add a robot, just put the program file in the directory `players` (and copy it to the root) (you can change the directory in the config file). Requirements for the program:
 
 1. The file must have the extension `.py`
 2. The file must contain a syntactically correct python code.
