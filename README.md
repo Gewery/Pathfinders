@@ -82,14 +82,15 @@ def move (info, ctx):
 
 ### "Observer"
 
-`` `python
-def move (info, ctx):
-    # Do nothing, we print a map and a list of treasures
-    print(info ["map"])
-    print(info ["coins"])
-    # The robot does not move anywhere, will ignore the wrong value
-    return None
-`` `
+
+```python
+def move(info, ctx):
+    # Do nothing, we print a map and a list of treasures
+    print(info["map"])
+    print(info["coins"]) 
+    # The robot does not move anywhere, will ignore the wrong value
+    return None
+```
 
 ### "The buggy robot"
 
