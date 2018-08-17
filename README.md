@@ -1,3 +1,112 @@
+To run it on your own computer you should install 2 modules:
+- Flask (pip install flask)
+- configparser (pip install configparser)
+
+Also your .py file should be in the "players" and in the root of a game (folder "Pathfinders")
+
+
+
+Programming the robot
+
+To add a robot, just put the program file in the directory `players` (you can change the directory in the config file). Requirements for the program:
+
+1. The file must have the extension `.py`
+2. The file must contain a syntactically correct python code.
+3. A function with two arguments `move (info, ctx)`
+
+If all three conditions are met, then when the game starts, the player will appear whose name will be the same as the file name (without `.py`). Moving the robot at each move is specified using the `move (info, ctx)` function. The function must return a value from 0 to 3, which indicates the direction of the next step of the robot:
+ 
+* 0 - up
+* 1 - down
+* 2 - left
+* 3 - right
+
+If the function returns any other value, the robot will remain in place on this move, but it can continue to move on subsequent moves. If an error occurs in the function (an exception is thrown), the robot will remain in place until the end of the game.
+
+To calculate the next move, the function can use information about the current game situation. Information about the map of the labyrinth, the location of coins and rivals is contained in the variable info, which is the first argument of the function. info is a dictionary that can contain the following fields:
+ 
+* `info [" x "]` - the current coordinate of the robot on the playing field horizontally (measured from the left starts at 0)
+* `info [" y "]` - similarly vertically (counted from the top starts at 0)
+* `info [" coins "]` - coordinates of coins. The list of tuples (x, y), for example `info [" coins "] = [(1, 3), (3, 0), (0, 4)]`
+* `info [" players "]` - coordinates of other players. The list of tuples (x, y), for example `info [" playes "] = [(2, 2)]`
+* `info [" map "]` - a map of the labyrinth. Presented as a two-dimensional array of 0 and 1. 1 - a wall, 0 - a free field.
+
+All coordinates are counted from the upper left corner of the field starting from (0, 0). In subsequent editions of the game, the composition of the fields in the dictionary `info` can vary.
+
+It is necessary to note the device of the card separately. A map is a two-dimensional array, that is, a list of lists. For example:
+
+`` `python
+info ["map"] = [
+[0, 0, 0, 1, 0],
+[0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0],
+[1, 1, 0, 1, 0]
+]
+`` `
+The map is a list of "strings", so to find out what is at the x, y coordinate, you need to refer to the element info ["map"] [y] [x] `, not to the info [" map "] [x] [y] `.
+
+The second function argument is an empty dictionary `ctx` into which you can write arbitrary fields. The next time the function is called, these data will appear in the dictionary `ctx`. In this way, it can be used to store the results of calculations between subsequent calls to the `move ()` function.
+
+## Examples of robot control programs
+
+### "Always up"
+
+`` `python
+def move (info, ctx):
+    return 0 # Move upwards always
+`` `
+
+### "Observer"
+
+`` `python
+def move (info, ctx):
+    # Do nothing, we print a map and a list of treasures
+    print(info ["map"])
+    print(info ["coins"])
+    # The robot does not move anywhere, will ignore the wrong value
+    return None
+`` `
+
+### "The buggy robot"
+
+`` `python
+def move (info, ctx):
+    return 10/0
+`` `
+After the start of the game, an error occurs.
+`` `
+ERROR. Process 'robot' on move function. integer division or modulo by zero.
+`` `
+The robot does not move anymore, but for the rest the game continues.
+
+### "EGGOG"
+
+Invalid Python code: no colon, tab.
+
+`` `python
+def move (info, ctx)
+return 0
+`` `
+The game does not start with an error:
+`` `
+ERROR: Error loading player robot: invalid syntax (robot.py, line 3)
+`` `
+It is necessary either to correct the error, or to delete the file with an error from the directory with the programs of the robots.
+
+### "Random walks"
+
+In the `players` directory there are already two examples of programs for robots: chuck and rocky. In both cases, the direction of the next move is chosen randomly. But in the chuck algorithm, it is checked that the corresponding move is possible. Pay attention to the results of the competitions of the two algorithms.
+
+## Bugs and features
+
+* The game does not limit the number of players, but the web interface can not display more than 7 robots on the field. The restriction is associated with the patrol color for robots - there are now only 7 colors. Can be corrected if necessary.
+* The game must be terminated by Ctrl-C in the launch console. In very rare cases, the flask does not end and the program hangs. The process must be killed with SIGTERM (kill)
+* The full path to the pathfinders directory can not contain Russian letters. Otherwise, Flask can give an error when loading data from the static directory. `# - * - coding: utf-8 - * -` does not help. As a workaround, you need to move the game to a directory that does not contain Russian letters.
+* On Windows, the current code for importing player modules is not working correctly. Python looks for modules in the standard path path and in the main game directory. As a workaround, you need to place the module with the player's program in the `players` directory and also a copy to the main directory next to the game. Let's investigate the problem, maybe fix.
+* Robots always made a move in a certain order, which was determined when modules were loaded. The problem is fixed in the current version.
+
+
+
 # pathfinders
 
 Игра про поиск сокровищ в лабиринте. По лабиринту раскиданы золотые монеты, которые собирают полностью автоматические роботы. Задача игроков - написать программу управления роботом для сбора монет. Надо помнить, что другие роботы не стоят на месте и тоже ищут сокровища. Побеждает тот, чей робот собрёт больше монет.
@@ -6,7 +115,7 @@
 
 ## Как запустить игру?
 
-Для работы игра требует python2.7 и [Flask](http://flask.pocoo.org/) для web интерфейса. Рекомендую поставить Flask из репозитария вашего дистрибутива Linux. Тестирование производилось на Linux (Fedora 25). Работоспособность на Windows не гарантируется.
+Для работы игра требует python3 и [Flask](http://flask.pocoo.org/) для web интерфейса.
 
 1. Склонировать репозитарий из Github
 2. Запустить из командной строки 
@@ -126,8 +235,8 @@ def move(info, ctx):
 ```python
 def move(info, ctx):
     # Ничего не делаем печатаем карту и список сокровищ
-    print info["map"]
-    print info["coins"] 
+    print(info["map"])
+    print(info["coins"]) 
     # Робот никуда не двинется, проигнорирует ошибочное значение
     return None
 ```
